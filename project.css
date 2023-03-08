@@ -3,8 +3,6 @@ body{
   margin:0;
   padding:0;
   min-height: 100vh;
-  background: rgb(196,49,49);
-  background: linear-gradient(247deg, rgba(196,49,49,1) 25%, rgba(69,124,27,1) 81%);
   justify-content: center;
   align-items: center;
   font-family: arial;
@@ -16,7 +14,7 @@ body{
   display: flex;
   justify-content: space-between;
   flex-wrap:wrap;
-  
+  z-index: 20;
 }
 
 .container .card{
@@ -133,36 +131,123 @@ body{
   box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
 }
 
-@media only screen and (max-width: 480px) {
-  .container {
+@keyframes move_wave {
+  0% {
+      transform: translateX(0) translateZ(0) scaleY(1)
+  }
+  50% {
+      transform: translateX(-25%) translateZ(0) scaleY(0.55)
+  }
+  100% {
+      transform: translateX(-50%) translateZ(0) scaleY(1)
+  }
+}
+.waveWrapper {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+.waveWrapperInner {
+  position: absolute;
   width: 100%;
+  overflow: hidden;
+  height: 100%;
+  bottom: -1px;
+  background: url(名称未設定.png);
+  background-size: cover;
+}
+
+.waveWrapperInner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: black;
+  opacity: 0.5;
+  z-index: -1;
+}
+.bgTop {
+  z-index: 15;
+  opacity: 0.5;
+}
+.bgMiddle {
+  z-index: 10;
+  opacity: 0.75;
+}
+.bgBottom {
+  z-index: 0;
+}
+.wave {
+  position: absolute;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background-repeat: repeat no-repeat;
+  background-position: 0 bottom;
+  transform-origin: center bottom;
+}
+.waveTop {
+  background-size: 50% 100px;
+}
+.waveAnimation .waveTop {
+animation: move-wave 3s;
+ -webkit-animation: move-wave 3s;
+ -webkit-animation-delay: 1s;
+ animation-delay: 1s;
+}
+.waveMiddle {
+  background-size: 50% 120px;
+}
+.waveAnimation .waveMiddle {
+  animation: move_wave 10s linear infinite;
+}
+.waveBottom {
+  background-size: 50% 100px;
+}
+.waveAnimation .waveBottom {
+  animation: move_wave 15s linear infinite;
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    width: 90%;
   }
   
   .container .card .face {
-  width: 100%;
-  height: auto;
+    width: 100%;
+    height: 150px;
   }
   
   .container .card .face.face1 {
-  transform: translateY(50px);
+    transform: translateY(50px);
+  }
+  
+  .container .card:hover .face.face1 {
+    transform: translateY(0);
+    box-shadow: none;
   }
   
   .container .card .face.face2 {
-  transform: translateY(-50px);
-  padding: 10px;
+    transform: translateY(-50px);
   }
   
-  .container .card .face.face2 .content p, a {
-  font-size: 8pt;
+  .container .card:hover .face.face2 {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+  
+  .container .card .face.face2 .content {
+    padding: 10px;
+    font-size: 8pt;
   }
   
   .container .card .face.face2 .content a {
-  padding: 5px;
-  margin: 10px 0 0;
-  font-size: 8pt;
+    margin-top: 10px;
   }
-  
-  .container .card .face.face2 .content a:hover {
-  box-shadow: inset 0px 0px 5px rgba(0,0,0,0.5);
-  }
-  }
+}
